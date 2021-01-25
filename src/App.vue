@@ -1,18 +1,32 @@
 <template>
-  
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div id="app">
+  <ClientsList v-bind:clients="clients"/>
+</div>
 
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios";
+import ClientsList from "./components/ClientsList"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ClientsList
+  },
+  data() {
+    return {
+      clients: []
+    }
+  }, 
+  methods: {
+    created() {
+      axios.get('https://jsonplaceholder.typicode.com/users?')
+      .then(resp => this.clients = resp.data)
+      .catch(err => console.log(err))
+    }
   }
+  
 }
 </script>
 
